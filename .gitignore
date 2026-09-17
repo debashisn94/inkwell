@@ -1,0 +1,11 @@
+node_modules/
+out/
+audio/*-raw/
+audio/*.wav
+audio/*-words.json
+audio/queue.log
+public/vo-*.m4a
+voice/reference/*.wav
+*.generated.json
+inkwell.config.json
+.DS_Store

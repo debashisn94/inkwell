@@ -1,0 +1,7 @@
+{
+  "name": "inkwell",
+  "description": "Flat-cartoon video, entirely in code: mocap-driven 2D character rigs, hand-authored SVG characters, unhurried synthetic narration, and word-accurate captions. Built on Remotion.",
+  "version": "0.1.0",
+  "license": "MIT",
+  "keywords": ["remotion", "animation", "video", "mocap", "bvh", "svg", "captions", "tts"]
+}

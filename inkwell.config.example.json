@@ -1,0 +1,19 @@
+{
+  "paths": {
+    "audio": "audio",
+    "src": "src",
+    "generated": "src/videos",
+    "out": "out",
+    "public": "public",
+    "entry": "src/index.ts"
+  },
+  "voice": {
+    "reference": "voice/reference/narrator.wav",
+    "control": "Warm and conversational, unhurried, with natural pauses. Speaking to one person, not an audience.",
+    "activate": ""
+  },
+  "pace": { "targetWps": 2.65, "tolerance": 0.12 },
+  "signoff": { "text": null, "wav": null },
+  "whisper": { "model": "mlx-community/whisper-large-v3-turbo" },
+  "render": { "concurrency": 4 }
+}

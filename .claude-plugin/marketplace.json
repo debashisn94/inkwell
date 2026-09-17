@@ -1,0 +1,11 @@
+{
+  "name": "inkwell",
+  "owner": { "name": "Inkwell contributors" },
+  "plugins": [
+    {
+      "name": "inkwell",
+      "source": "./",
+      "description": "Flat-cartoon video, entirely in code. Mocap-driven 2D character rigs, SVG character craft, narration pacing, and word-accurate captions for Remotion."
+    }
+  ]
+}
