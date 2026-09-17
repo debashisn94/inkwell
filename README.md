@@ -15,14 +15,14 @@ have an obvious solution that does not work.
 **Claude Code** — as a plugin:
 
 ```
-/plugin marketplace add <owner>/inkwell
+/plugin marketplace add debashisn94/inkwell
 /plugin install inkwell@inkwell
 ```
 
 **Any other agent** — via the `skills` CLI (Cursor, Codex, Copilot, Gemini CLI, opencode):
 
 ```
-npx skills add https://github.com/<owner>/inkwell --skill inkwell
+npx skills add https://github.com/debashisn94/inkwell --skill inkwell
 ```
 
 Add `-g` to install globally; drop it to scope to the current project.
