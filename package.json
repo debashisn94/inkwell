@@ -1,21 +1,25 @@
 {
   "name": "inkwell",
-  "version": "0.1.0",
-  "description": "Flat-cartoon video, entirely in code. Mocap-driven 2D character rigs, SVG character craft, narration pacing, and word-accurate captions for Remotion.",
+  "version": "0.2.0",
+  "description": "A product URL in, ad videos in every aspect ratio out. Built on Remotion.",
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "chunk": "node tools/chunk.mjs",
-    "phonetics": "node tools/phonetics.mjs",
-    "pace": "node tools/pace-fix.mjs",
-    "audio": "node tools/finish-audio.mjs",
-    "words": "node tools/align-words.mjs",
-    "render": "node tools/render.mjs",
+    "new": "node tools/new-ad.mjs",
+    "research": "node tools/research.mjs",
+    "render": "node tools/render-ad.mjs",
     "qa": "node tools/qa.mjs"
   },
   "peerDependencies": {
     "@remotion/bundler": ">=4.0.0",
     "@remotion/renderer": ">=4.0.0"
   },
-  "keywords": ["remotion", "animation", "mocap", "bvh", "svg", "captions", "tts", "video"]
+  "keywords": [
+    "remotion",
+    "video-ads",
+    "advertising",
+    "social-media",
+    "aspect-ratio",
+    "product-video"
+  ]
 }

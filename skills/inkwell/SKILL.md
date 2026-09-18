@@ -1,87 +1,91 @@
 ---
 name: inkwell
-description: Build flat-cartoon explainer video entirely in code with Remotion — mocap-driven 2D character rigs, hand-authored SVG characters, synthetic narration that sounds unhurried, and word-accurate captions. Use when making an animated explainer, a narrated short, a character-driven reel, a walk cycle or character animation in SVG/CSS, when timing captions to a voiceover word by word, when synthetic narration sounds rushed or robotic, or when batch-rendering Remotion compositions.
+description: Turn a product URL into a finished ad video in every aspect ratio — 9:16 for Reels/Shorts/TikTok, 4:5 and 1:1 for feed, 16:9 for YouTube. Researches the product, pulls its real imagery and brand colours from its own site, writes the ad, and renders all formats with Remotion. Use when someone wants an ad, promo, launch, or social video for a product, website, or app, wants to advertise or market something, needs a video ad for YouTube/Instagram/LinkedIn/TikTok/Meta ads, or asks to make a video in multiple aspect ratios.
 license: MIT
 ---
 
 # Inkwell
 
-Flat-cartoon video, entirely in code. This skill covers four jobs that each have a
-non-obvious right answer, plus the tools that do them.
+You turn a product URL into ad videos in every platform size.
 
-Load only the reference you need.
+**You own the story.** The tools handle research, layout, and rendering; the part that
+decides whether the ad works is the copy, and that is yours. Treat the generated `ad.json`
+as a stub to be rewritten, never as a draft to be tweaked.
 
-## Animating a character
+## The flow
 
-A character that walks, gestures, or shifts weight → read
-[references/mocap-rigs.md](references/mocap-rigs.md).
+```bash
+node tools/new-ad.mjs https://the-product.com --out=ad   # scaffold + research
+# ...now rewrite ad/ad.json...
+cd ad && npm install
+node ../tools/render-ad.mjs                              # all four formats
+```
 
-Hand-keyed walk cycles look hand-keyed. `tools/bake-bvh.py` reduces a real motion-capture
-clip to 2D joint angles a flat SVG rig can consume, so you get genuine weight shift without
-a 3D pipeline. The reference covers where to get free clips, how to map the angles onto
-nested SVG transforms, and the three mistakes that make the result look wrong (floating
-characters, double-rotated ankles, splayed arms on a front view).
+`new-ad.mjs` writes `brand.json` (real imagery, palette, positioning) and a starter
+`ad.json` with every line you must replace marked `REWRITE`.
 
-## Drawing the character
+## Step 1 — read the research before you write
 
-Authoring or fixing a flat-cartoon character in SVG → read
-[references/svg-characters.md](references/svg-characters.md).
+Open `brand.json`. It has the site's own `title`, `description`, `headings`, and
+`keywords`. **Also read the product page yourself.** The extractor gets you brand identity
+and assets; it cannot tell you what the product is actually for, who it beats, or what the
+objection is. Pricing, proof, and the competitive alternative are usually on the page and
+are the three things that make an ad convert.
 
-Exact proportions, a facial grid, limb construction, cel-shading placement, and the rigging
-setup that survives large rotations. Every number was corrected against a render rather than
-guessed. If a character looks amateur and you cannot say why, the five tells at the end of
-that file are almost always the reason — `paint-order="stroke"` and hue-rotated shadows lead
-the list.
+## Step 2 — write the ad
 
-## Narration
+Four scene types, in `ad.json`. A 15–22 second ad is four scenes; do not exceed six.
 
-Recording or generating a voiceover, or fixing one that sounds rushed → read
-[references/voice.md](references/voice.md).
+| Scene | Fields | Job |
+|---|---|---|
+| `hook` | `kicker`, `headline`, `sub`, `shot` | Earn the next two seconds |
+| `feature` | `kicker`, `headline`, `bullets[]`, `shot` | One reason to care, made concrete |
+| `proof` | `quote`, `attrib`, `stat`, `statLabel` | Evidence someone else believed it |
+| `cta` | `headline`, `action`, `url` | One action, named as a verb |
 
-Pace is what gives synthetic narration away, not timbre, because most models pick a speaking
-rate per chunk with no memory of the last one. Covers normalising pace against a series
-target, the `atempo` limits, choosing a voice-clone reference on pitch, and keeping the
-spelling the model reads separate from the words the viewer sees.
+Rules that matter more than the template:
 
-## Captions
+- **The hook is the whole ad.** Most viewers see only the first two seconds. Lead with the
+  viewer's problem in their words, never with the product name or a greeting.
+- **Say the number.** "₹49 a question, flat" beats "affordable pricing". Take real figures
+  from the page; never invent one.
+- **Headlines under ~8 words.** The measure is capped in characters, so long headlines
+  shrink and wrap badly in landscape.
+- **3 bullets maximum**, each a phrase, not a sentence.
+- **One CTA.** A named action, and the bare domain.
+- Claim only what the site claims. You are advertising someone's product — an invented
+  statistic is a real problem, not a rounding error.
 
-Timing captions to narration word by word → read
-[references/caption-timing.md](references/caption-timing.md).
+## Step 3 — render every format
 
-The whole pipeline, and the one mistake worth stating up front: **do not assign transcribed
-words to beats by clock time.** Transcription places a chunk's first word slightly before the
-nominal window start, so every beat donates its first word to its predecessor and the mapping
-runs one word late for the entire video. Align globally against the full transcript, then
-split by script word count.
+`render-ad.mjs` renders `Reel` (9:16), `Feed` (4:5), `Square` (1:1) and `Wide` (16:9) from
+one definition. Pass ids to render a subset; `--list` shows them.
 
-## The tools
+These are not one master letterboxed four times — each shape gets a real layout. If you
+need to know why a headline is a different size at 16:9, read
+[references/aspect-ratios.md](references/aspect-ratios.md).
 
-All read `inkwell.config.json` from the project root; see `DEFAULTS` in
-`tools/lib/config.mjs` for every key.
+## Step 4 — look at the output
 
-| Tool | Does |
-|---|---|
-| `bake-bvh.py` | BVH mocap → 2D joint angles for one normalised stride |
-| `chunk.mjs` | script.md → beat-aligned `chunks.json` |
-| `phonetics.mjs` | respell `tts_text` only, never on-screen `text` |
-| `tts-queue.sh` | sequential TTS batch (one process at a time, resumable) |
-| `pace-fix.mjs` | normalise per-chunk speaking rate toward a series target |
-| `finish-audio.mjs` | stitch + master + emit exact beat timing |
-| `align-words.mjs` | transcribe and align → per-word timestamps |
-| `qa.mjs` | flag blank/empty frames in a finished render |
-| `render.mjs` | bundle once, render many; stills and single frames too |
+Render, then actually watch a frame from each format. `node ../tools/qa.mjs Reel --sheet`
+gives a contact sheet. Things that only show up on inspection: a headline colliding with
+the safe area, an asset that turned out to be a logo on a transparent background, copy that
+reads fine in portrait and awkwardly in landscape.
 
-Pipeline order matters: `chunk → phonetics → tts-queue → pace-fix → finish-audio →
-align-words → render → qa`. `pace-fix` must run before `finish-audio` (it rewrites the
-chunk wavs that get stitched), and `align-words` after it (it needs the mastered file and
-the exact timing).
+## Imagery, in priority order
 
-## Two rules that apply throughout
+1. **The product's own site.** `og:image` and the icon, downloaded by the research step.
+   This is what makes an ad look like the product rather than like a template.
+2. **Stock**, if you have a key and the site is thin. Not required and not wired in by
+   default — a real product screenshot beats a stock photo of a laptop every time.
+3. **A generated backdrop.** Built from the extracted accent colour. This is the automatic
+   fallback and it is why a text-only scene still looks on-brand.
 
-**Never verify a generated file from the tool's own success output.** Several tools here
-skip work when an output already exists, which means a stale file and a cheerful log line
-look identical. When the input changed, delete the output.
+If a site yields only one asset, **use fewer image scenes** rather than repeating the same
+picture — repetition reads as a thin ad.
 
-**Check structure before rendering, not after.** If scene art is keyed on beat numbers, a
-script edit that changes the beat count leaves art pointing at beats that no longer exist —
-and the render succeeds with scenes silently missing.
+## Extras
+
+The repo also carries a character-animation toolkit — mocap-driven 2D rigs and an SVG
+character playbook — used for narrated explainer video rather than ads. See
+[references/characters.md](references/characters.md) if a brief calls for it.

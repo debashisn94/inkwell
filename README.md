@@ -1,14 +1,13 @@
 # /inkwell
 
-**Flat-cartoon video, entirely in code.**
+**A product URL in. Ad videos in every aspect ratio out.**
 
-`/inkwell` is an agent skill and toolkit for building narrated explainer video with
-[Remotion](https://remotion.dev): mocap-driven 2D character rigs, hand-authored SVG
-characters, synthetic narration that sounds unhurried, and captions timed to the word.
+`/inkwell` researches a product from its own website — real imagery, real brand colours,
+real positioning — then renders a finished ad in every platform size: 9:16 for Reels,
+Shorts and TikTok, 4:5 and 1:1 for feed, 16:9 for YouTube and pre-roll. One definition,
+four real layouts, built on [Remotion](https://remotion.dev).
 
-It is the extracted, generalised version of a pipeline that shipped a few dozen episodes.
-Most of what is here is not code so much as the corrected answer to four problems that each
-have an obvious solution that does not work.
+No API keys. No stock-photo account. The ad is made of the product's own assets.
 
 ## Install
 
@@ -25,105 +24,89 @@ have an obvious solution that does not work.
 npx skills add https://github.com/debashisn94/inkwell --skill inkwell
 ```
 
-Add `-g` to install globally; drop it to scope to the current project.
-
 **No installer** — copy it:
 
 ```
 rsync -a --exclude '.DS_Store' skills/inkwell/ ~/.claude/skills/inkwell/
 ```
 
-This repo also exposes the skill at `.claude/skills/`, `.agents/skills/`, and
-`.opencode/skills/` via symlinks, so agents that scan those paths find it with no config.
-
-## What's actually in here
-
-Four problems, and what turned out to be true about each:
-
-**Characters that move like bodies.** Hand-keyed walk cycles look hand-keyed, and a 3D
-pipeline is a different job with rigging and lighting attached. `bake-bvh.py` runs full
-forward kinematics over a motion-capture clip, projects it to the sagittal plane, and reads
-2D joint angles **off the bone vectors between world positions** rather than unpicking Euler
-channel orders — which is what makes it work across skeletons instead of just one.
-
-**Characters that don't look amateur.** Exact proportions, a facial grid, limb construction,
-cel-shading placement, and rigging that survives large rotations. Every number was corrected
-against a render rather than guessed. Two of the five listed amateur tells are a single
-missing SVG attribute and hue-rotated shadows.
-
-**Narration that doesn't sound rushed.** Pace gives synthetic voice away, not timbre. Most
-models pick a speaking rate per chunk with no memory of the last one — an episode can jump
-2.25 → 3.12 words/sec between consecutive sentences. A human reading the same script varied
-by 67%; the model by 150%.
-
-**Captions timed to the word.** The obvious implementation assigns transcribed words to
-beats by clock time. It fails subtly: transcription places a chunk's first word slightly
-*before* the nominal window start, so every beat donates its first word to its predecessor
-and the mapping runs one word late for the whole video. Global Needleman-Wunsch alignment
-over the full transcript, split afterwards by script word count.
-
-## Try it
-
-A runnable example lives in [`examples/hello-inkwell`](examples/hello-inkwell) — a character
-walking on real motion capture, with word-timed captions. It needs no API keys, no TTS
-engine, and no transcriber:
+## Use it
 
 ```bash
-cd examples/hello-inkwell
-npm install
-npm run render      # -> out/Walk.mp4
-npm run qa          # frame QA + contact sheet
+node tools/new-ad.mjs https://your-product.com --out=ad
+# rewrite ad/ad.json — every line marked REWRITE
+cd ad && npm install
+node ../tools/render-ad.mjs
 ```
 
-## The pipeline
-
 ```
-script.md
-  → chunk.mjs         beat-aligned chunks.json
-  → phonetics.mjs     respell tts_text only; on-screen text untouched
-  → tts-queue.sh      one wav per chunk
-  → pace-fix.mjs      normalise speaking rate toward a series target
-  → finish-audio.mjs  stitch + master + exact beat timing
-  → align-words.mjs   transcribe + align → per-word timestamps
-  → render.mjs        bundle once, render many
-  → qa.mjs            flag blank frames in the finished file
+out/Reel.mp4     1080x1920   Reels · Shorts · TikTok · Stories
+out/Feed.mp4     1080x1350   Instagram / Facebook feed
+out/Square.mp4   1080x1080   Feed · LinkedIn
+out/Wide.mp4     1920x1080   YouTube · LinkedIn · X · pre-roll
 ```
 
-Order matters: `pace-fix` rewrites the chunk wavs that `finish-audio` stitches, and
-`align-words` needs both the mastered audio and the exact timing.
+Ask your agent instead, and it will research the product, write the copy, and render:
 
-Every tool reads `inkwell.config.json` from your project root. See `DEFAULTS` in
-`tools/lib/config.mjs` for the full set of keys — paths, pace target, gap lengths, mastering
-filter, QA threshold, render concurrency.
+```
+make an ad for https://your-product.com
+```
+
+## How the research works
+
+`tools/research.mjs` reads the page and writes `brand.json`: name, positioning, headings,
+keywords, downloaded imagery, and a brand palette.
+
+Two decisions in there are the difference between an ad that looks like the product and one
+that looks like a template:
+
+**It reads the HTML head, not `<img>` tags.** Most polished product sites render imagery in
+JavaScript or as CSS backgrounds, so a raw-HTML image sweep comes back empty on exactly the
+sites you most want to advertise. `og:image` is the one asset that is reliably present,
+correctly sized, and chosen by the owner to represent the product.
+
+**It samples the palette only from the brand's own declared assets.** Sampling every image
+on the page sounds more thorough and is actively wrong: on a portfolio or a customer-logo
+strip, those are *other companies'* marks. Tested against a site carrying client logos, the
+accent came back as the client's teal instead of the brand's amber.
+
+Colour extraction runs through `ffmpeg` rather than an image library, so there is no native
+dependency. Getting it right took three attempts — the write-up is in
+[`tools/lib/colors.mjs`](tools/lib/colors.mjs), and the short version is that averaging
+colours in RGB buckets returns mud, and sampling too coarsely destroys the accent before
+any logic runs.
+
+## One ad, every aspect ratio
+
+Not a 16:9 master with bars added — a letterboxed reel wastes the top and bottom third of
+the most valuable surface in social. Each shape gets a real layout: type scales off the
+short edge, safe areas match what the platform actually covers, and the stack direction
+flips between portrait and landscape.
+
+Full reasoning in
+[references/aspect-ratios.md](skills/inkwell/references/aspect-ratios.md). Adding a fifth
+format is one entry in `FORMATS` — the engine derives the rest.
 
 ## Requirements
 
 - Node.js 20+ and [Remotion](https://remotion.dev) (free for individuals and teams of ≤3)
 - `ffmpeg` and `ffprobe` on `PATH`
-- Python 3 — for `bake-bvh.py` (standard library only, no dependencies)
-- A TTS engine, if you want synthetic narration. `tts-queue.sh` is written for
-  [VoxCPM](https://github.com/OpenBMB/VoxCPM); swap the marked ENGINE block for another.
-- A word-timestamp transcriber for captions — `mlx-whisper` on Apple Silicon by default.
-
-The character and mocap halves need none of the audio tooling; the caption and voice halves
-need none of the character tooling. Take either.
-
-## Motion capture clips
-
-The [CMU Graphics Lab Motion Capture Database](http://mocap.cs.cmu.edu/) is free for all
-uses and has thousands of clips. Use the cgspeed BVH conversions — their joint names match
-the `NAMES` map in `bake-bvh.py` as shipped. Retarget another skeleton by editing that map.
 
 ## What's in this repo
 
-- `skills/inkwell/` — the skill and its four references
-- `tools/` — the pipeline, all config-driven
-- `examples/hello-inkwell/` — a runnable Remotion project (mocap rig + captions)
-- `.claude-plugin/` — plugin manifest and marketplace catalog
-- `.claude/`, `.agents/`, `.opencode/` — symlinks for agent discovery
+- `skills/inkwell/` — the skill and its references
+- `tools/` — research, scaffold, render, QA
+- `template/` — the ad project copied into your working directory
+- `examples/hello-inkwell/` — a runnable demo of the character-animation extra
+
+## Also here: character animation
+
+The repo carries a second, optional toolkit for narrated explainer video — mocap-driven 2D
+character rigs, an SVG character playbook, narration pacing and word-accurate captions. It
+shares the render and QA tooling and nothing else. See
+[references/characters.md](skills/inkwell/references/characters.md).
 
 ## License
 
-MIT. The CMU mocap database has its own terms (free for all uses); Remotion is free for
-individuals and organisations of three or fewer people and requires a company licence above
-that.
+MIT. Remotion is free for individuals and organisations of three or fewer people and
+requires a company licence above that.

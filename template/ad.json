@@ -1,0 +1,17 @@
+{
+  "_comment": "Placeholder. tools/new-ad.mjs overwrites this with a starter for your product.",
+  "brandName": "Your Product",
+  "scenes": [
+    { "type": "hook", "seconds": 4, "kicker": "Kicker",
+      "headline": "The problem your buyer already has.",
+      "sub": "One line that makes it concrete." },
+    { "type": "feature", "seconds": 5.5, "kicker": "What it does",
+      "headline": "The one thing it does better.",
+      "bullets": ["A specific capability", "A second one", "A third, with a number"] },
+    { "type": "proof", "seconds": 5, "stat": "00",
+      "statLabel": "what the number counts",
+      "quote": "Something a real user said.", "attrib": "Their name · role" },
+    { "type": "cta", "seconds": 4,
+      "headline": "The offer.", "action": "Do the thing →", "url": "example.com" }
+  ]
+}

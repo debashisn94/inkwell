@@ -1,7 +1,18 @@
 {
   "name": "inkwell",
-  "description": "Flat-cartoon video, entirely in code: mocap-driven 2D character rigs, hand-authored SVG characters, unhurried synthetic narration, and word-accurate captions. Built on Remotion.",
-  "version": "0.1.0",
+  "description": "A product URL in, ad videos in every aspect ratio out. Researches the product's own site for real imagery and brand colours, then renders 9:16, 4:5, 1:1 and 16:9 with Remotion.",
+  "version": "0.2.0",
   "license": "MIT",
-  "keywords": ["remotion", "animation", "video", "mocap", "bvh", "svg", "captions", "tts"]
+  "keywords": [
+    "remotion",
+    "video-ads",
+    "advertising",
+    "marketing",
+    "social-media",
+    "aspect-ratio",
+    "brand",
+    "product-video",
+    "youtube",
+    "reels"
+  ]
 }

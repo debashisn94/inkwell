@@ -1,5 +1,6 @@
 node_modules/
 out/
+!template/**
 audio/*-raw/
 audio/*.wav
 audio/*-words.json
@@ -11,3 +12,6 @@ inkwell.config.json
 !examples/*/inkwell.config.json
 .DS_Store
 memory-log.md
+template/node_modules/
+template/out/
+ad/

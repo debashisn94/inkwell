@@ -1,11 +1,13 @@
 {
   "name": "inkwell",
-  "owner": { "name": "Inkwell contributors" },
+  "owner": {
+    "name": "Inkwell contributors"
+  },
   "plugins": [
     {
       "name": "inkwell",
       "source": "./",
-      "description": "Flat-cartoon video, entirely in code. Mocap-driven 2D character rigs, SVG character craft, narration pacing, and word-accurate captions for Remotion."
+      "description": "Turn a product URL into ad videos in every aspect ratio \u2014 researched from the product's own site, rendered with Remotion."
     }
   ]
 }

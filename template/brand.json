@@ -1,0 +1,11 @@
+{
+  "_comment": "Placeholder. tools/research.mjs overwrites this with the real product's brand.",
+  "name": "Your Product",
+  "url": "https://example.com",
+  "title": "Your Product",
+  "description": "",
+  "headings": [],
+  "keywords": [],
+  "palette": { "accent": "#2A6BF2", "ink": "#F5F6F8", "surface": "#0B0D12", "dark": true },
+  "assets": []
+}
