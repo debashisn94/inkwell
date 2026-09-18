@@ -88,3 +88,67 @@ export const parallax = (frame: number, duration: number, depth = 1) => {
     y: Math.cos(t * Math.PI * 0.6) * 1.1 * depth,
   };
 };
+
+// ---------------------------------------------------------------------------
+// Element choreography
+//
+// Smooth motion was not enough to stop the ads reading as slides, because the problem was
+// never the easing -- it was the STRUCTURE. Every element arrived together, held, and left
+// together. Transform that group and you have moved a slide; the eye reads a rectangle of
+// content being swapped, however nicely it travels.
+//
+// The fix is to give every element its own lifespan. The image is already leaving while the
+// headline is still settling; the next scene's kicker is on screen before the last scene's
+// bullets have gone. At no single frame is there a clean "slide A / slide B" boundary,
+// because there is never a moment when the frame agrees with itself.
+//
+// Elements also leave in a DIFFERENT direction from the one they arrived in. Enter up, exit
+// up and the whole thing reads as a conveyor belt.
+// ---------------------------------------------------------------------------
+
+export type Vector = 'up' | 'down' | 'left' | 'right' | 'scale';
+
+const vec = (v: Vector, amount: number) => {
+  switch (v) {
+    case 'up': return { x: 0, y: amount, s: 1 };
+    case 'down': return { x: 0, y: -amount, s: 1 };
+    case 'left': return { x: amount, y: 0, s: 1 };
+    case 'right': return { x: -amount, y: 0, s: 1 };
+    case 'scale': return { x: 0, y: 0, s: 0.92 };
+  }
+};
+
+export const elementLife = (
+  frame: number,
+  sceneDuration: number,
+  fps: number,
+  opts: { enterAt?: number; exitAt?: number; from?: Vector; to?: Vector; distance?: number } = {},
+) => {
+  const { enterAt = 0, from = 'up', to = 'down', distance = 34 } = opts;
+  // default exit is staggered off the END of the scene, so later elements leave first
+  const exitAt = opts.exitAt ?? sceneDuration - 14;
+
+  const enter = spring({
+    frame: frame - enterAt, fps,
+    config: { damping: 20, mass: 0.55, stiffness: 115 },
+  });
+  const leave = easeOutCubic(
+    interpolate(frame, [exitAt, exitAt + 13], [0, 1], {
+      extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
+    }),
+  );
+
+  const a = vec(from, distance);
+  const b = vec(to, distance * 0.7);
+
+  const x = a.x * (1 - enter) + b.x * leave;
+  const y = a.y * (1 - enter) + b.y * leave;
+  const scale = (1 - (1 - a.s) * (1 - enter)) * (1 - (1 - b.s) * leave);
+
+  return {
+    opacity: Math.min(enter, 1 - leave),
+    transform: `translate(${x}px, ${y}px) scale(${scale})`,
+    progress: enter,
+    leaving: leave,
+  };
+};

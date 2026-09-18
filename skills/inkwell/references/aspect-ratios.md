@@ -97,3 +97,44 @@ which is the wrong place to look.
 Per-word animation should use `transform` and `opacity` only, with no `will-change`, and
 let the browser decide what to promote. Reserve `will-change` for the one element per scene
 that genuinely moves every frame: the camera.
+
+### Smooth motion is not enough — the structure has to change
+
+A first motion pass took the frozen-frame share from 56% to 0% and the result still read as
+a slide deck. The reason is worth understanding, because the instinct is to reach for better
+easing and that is not the problem.
+
+If every element in a scene arrives together, holds, and leaves together, then transforming
+that group — however smoothly — moves a *slide*. The eye reads a rectangle of content being
+swapped. Three structural changes fix it:
+
+**Every element owns its lifespan.** The image is already leaving while the headline is
+still settling; bullets depart in the reverse of the order they arrived. There is no frame
+at which the composition agrees with itself, so there is no moment that reads as a boundary.
+
+**Scenes overlap, and the overlap must actually be visible.** Sequences overlap by 16
+frames, so the outgoing scene's last elements and the incoming scene's first are on screen
+together and both moving.
+
+This only works if nothing opaque sits between them. Originally each scene drew its own
+backdrop, so the instant a new Sequence began it covered the previous scene completely — the
+staggered exits all happened behind an opaque wall, and the boundary became a *dead frame*
+with the old scene hidden and the new one not yet animated in. Strictly worse than the
+cross-fade it replaced. The backdrop now lives once, in `Ad.tsx`, beneath everything.
+
+**Something never resets.** A brand mark and a progress rail live outside every Sequence for
+the whole runtime. Without a continuous element, each scene change is a total frame
+replacement, which is the definition of a slide.
+
+### Two things measurement caught that the eye did not
+
+**Text-only scenes freeze.** A scene with no product shot has nothing moving once its text
+has landed and its counter has finished — the backdrop alone drifts too slowly to register.
+`freezedetect` found a 0.7s frozen stretch inside one proof scene while every other scene
+measured clean. The content layer now floats a few pixels across the scene: invisible as an
+effect, enough to keep the frame alive.
+
+**Frame 0 is the thumbnail.** Springs starting at frame 0 leave the opening frames nearly
+black, and social platforms use frame 0 as the poster image — a dark, empty thumbnail on the
+one surface deciding whether the ad gets watched. The opening beats start with their springs
+already in progress, so frame 0 is a composed frame.
