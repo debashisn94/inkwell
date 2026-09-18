@@ -7,11 +7,30 @@
 // CHROME_PATH selects the browser (Remotion's bundled Chromium download is blocked on
 // some networks); CONCURRENCY caps the page pool -- keep it low on shared hosts, where
 // a large pool intermittently fails to boot.
-import { bundle } from '@remotion/bundler';
-import { selectComposition, renderMedia, renderStill } from '@remotion/renderer';
 import { mkdirSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
+import { createRequire } from 'node:module';
+import { pathToFileURL } from 'node:url';
 import { loadConfig } from './lib/config.mjs';
+
+// Resolve Remotion from the PROJECT being rendered, not from wherever this script lives.
+// Node resolves bare imports relative to the importing file, so a plain
+// `import from '@remotion/bundler'` only works when this tool sits inside the project's
+// own node_modules tree -- which it does not when inkwell is installed globally or
+// cloned alongside. Resolving against the cwd's package.json is what makes the tools
+// runnable from any project directory.
+const projectRequire = createRequire(join(process.cwd(), 'package.json'));
+const load = async (pkg) => {
+  try {
+    return await import(pathToFileURL(projectRequire.resolve(pkg)).href);
+  } catch {
+    console.error(`Cannot resolve ${pkg} from ${process.cwd()}.`);
+    console.error('Run this from a project directory that has Remotion installed.');
+    process.exit(1);
+  }
+};
+const { bundle } = await load('@remotion/bundler');
+const { selectComposition, renderMedia, renderStill } = await load('@remotion/renderer');
 
 const cfg = loadConfig();
 const BROWSER = process.env.CHROME_PATH || cfg.render.browser || undefined;

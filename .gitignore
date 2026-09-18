@@ -8,5 +8,6 @@ public/vo-*.m4a
 voice/reference/*.wav
 *.generated.json
 inkwell.config.json
+!examples/*/inkwell.config.json
 .DS_Store
 memory-log.md

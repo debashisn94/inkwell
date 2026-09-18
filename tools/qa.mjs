@@ -14,12 +14,16 @@ const cfg = loadConfig();
 const id = process.argv[2];
 const wantSheet = process.argv.includes('--sheet');
 const stemArg = process.argv.find((a) => a.startsWith('--stem='));
-if (!id) { console.error('usage: qa.mjs <CompId> [--stem=<id>] [--sheet]'); process.exit(1); }
+const timingArg = process.argv.find((a) => a.startsWith('--timing='));
+if (!id) { console.error('usage: qa.mjs <CompId> [--stem=<id>] [--timing=<path>] [--sheet]'); process.exit(1); }
 // Composition ids and audio stems are often not the same string; --stem bridges them.
+// --timing points straight at a timing file for projects that do not follow the naming.
 const stem = stemArg ? stemArg.split('=')[1] : id;
 
 const video = cfg.at(cfg.paths.out, `${id}.mp4`);
-const timingPath = cfg.at(cfg.paths.generated, `timing-${stem}.generated.json`);
+const timingPath = timingArg
+  ? cfg.at(timingArg.split('=')[1])
+  : cfg.at(cfg.paths.generated, `timing-${stem}.generated.json`);
 if (!existsSync(video)) { console.error(`no render: ${video}`); process.exit(1); }
 if (!existsSync(timingPath)) { console.log(`${id}: no timing file at ${timingPath}, skipped`); process.exit(0); }
 

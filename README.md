@@ -62,6 +62,19 @@ beats by clock time. It fails subtly: transcription places a chunk's first word 
 and the mapping runs one word late for the whole video. Global Needleman-Wunsch alignment
 over the full transcript, split afterwards by script word count.
 
+## Try it
+
+A runnable example lives in [`examples/hello-inkwell`](examples/hello-inkwell) — a character
+walking on real motion capture, with word-timed captions. It needs no API keys, no TTS
+engine, and no transcriber:
+
+```bash
+cd examples/hello-inkwell
+npm install
+npm run render      # -> out/Walk.mp4
+npm run qa          # frame QA + contact sheet
+```
+
 ## The pipeline
 
 ```
@@ -105,6 +118,7 @@ the `NAMES` map in `bake-bvh.py` as shipped. Retarget another skeleton by editin
 
 - `skills/inkwell/` — the skill and its four references
 - `tools/` — the pipeline, all config-driven
+- `examples/hello-inkwell/` — a runnable Remotion project (mocap rig + captions)
 - `.claude-plugin/` — plugin manifest and marketplace catalog
 - `.claude/`, `.agents/`, `.opencode/` — symlinks for agent discovery
 

@@ -1,0 +1,9 @@
+{
+  "paths": {
+    "generated": "src/data",
+    "out": "out",
+    "entry": "src/index.ts"
+  },
+  "render": { "concurrency": 4 },
+  "qa": { "blankYmin": 180 }
+}
