@@ -87,6 +87,17 @@ Full reasoning in
 [references/aspect-ratios.md](skills/inkwell/references/aspect-ratios.md). Adding a fifth
 format is one entry in `FORMATS` — the engine derives the rest.
 
+## Documentation
+
+| | |
+|---|---|
+| [Getting started](docs/getting-started.md) | A complete run, start to finish |
+| [`ad.json` reference](docs/ad-json.md) | Every field, and the writing rules that matter more |
+| [Tools](docs/tools.md) | Every command, flag and environment variable |
+| [Customising](docs/customising.md) | Palette, fonts, new aspect ratios, new scene types |
+| [Troubleshooting](docs/troubleshooting.md) | The failure modes, including the ones that point at the wrong cause |
+| [Aspect ratios & motion](skills/inkwell/references/aspect-ratios.md) | Why each format is laid out differently, and what stops it reading as a slideshow |
+
 ## Requirements
 
 - Node.js 20+ and [Remotion](https://remotion.dev) (free for individuals and teams of ≤3)
@@ -95,6 +106,7 @@ format is one entry in `FORMATS` — the engine derives the rest.
 ## What's in this repo
 
 - `skills/inkwell/` — the skill and its references
+- `docs/` — full documentation
 - `tools/` — research, scaffold, render, QA
 - `template/` — the ad project copied into your working directory
 - `examples/hello-inkwell/` — a runnable demo of the character-animation extra
