@@ -1,6 +1,6 @@
 ---
 name: inkwell
-description: Turn a product URL into a finished ad video in every aspect ratio — 9:16 for Reels/Shorts/TikTok, 4:5 and 1:1 for feed, 16:9 for YouTube. Researches the product, pulls its real imagery and brand colours from its own site, writes the ad, and renders all formats with Remotion. Use when someone wants an ad, promo, launch, or social video for a product, website, or app, wants to advertise or market something, needs a video ad for YouTube/Instagram/LinkedIn/TikTok/Meta ads, or asks to make a video in multiple aspect ratios.
+description: Turn a product URL into a finished ad video in every aspect ratio — 9:16 for Reels/Shorts/TikTok, 4:5 and 1:1 for feed, 16:9 for YouTube. Researches the product, pulls its real imagery and brand colours from its own site, writes the ad, and renders all formats with Remotion. Use when someone wants an ad, promo, launch, or social video for a product, website, or app, wants to advertise or market something, needs a video ad for YouTube/Instagram/LinkedIn/TikTok/Meta ads, or asks to make a video in multiple aspect ratios. Also makes narrated 16:9 launch films (90s-2min, cloned-voice narration, sound design) for launch videos, product-page heroes and founding-customer pitches.
 license: MIT
 ---
 
@@ -83,6 +83,34 @@ reads fine in portrait and awkwardly in landscape.
 
 If a site yields only one asset, **use fewer image scenes** rather than repeating the same
 picture — repetition reads as a thin ad.
+
+## Narrated launch films
+
+When the brief is a launch video, an explainer, or anything longer than an ad (60 seconds
+to two minutes, with a narrator), make a **film** instead. It is 16:9, voiced, and
+sound-designed.
+
+```bash
+node tools/new-film.mjs https://the-product.com --out=film
+# write film/film.json -- every line marked REWRITE
+cd film && npm install
+python ../tools/film-voice.py             # needs VoxCPM; one narrator, scored takes
+node ../tools/render-film.mjs --stems     # out/Film.mp4 + voice/sfx stems
+```
+
+What you own, in order of how much it matters:
+
+1. **The argument.** Problem shown happening, then the obvious fix and why it fails, then
+   the reveal, how it works, what is real today, the offer, and the action. The product
+   name lands only after the problem is felt.
+2. **One narration line per scene, 15-25 words**, written for the ear. `...` holds a beat,
+   a `?` turns the line, and fragments land hard. Give each line an `emotion`.
+3. **Honesty about what ships.** Use a `split` scene to separate shipped from planned.
+
+Read [docs/film.md](../../docs/film.md) for the twelve scene types and their fields
+before writing `film.json`. The narration drives scene lengths, so never hand-time a scene.
+After `film-voice.py`, read its score table: a line marked `x` failed a gate. Re-roll it
+with `--lines N` and say which lines you could not verify by ear.
 
 ## Extras
 

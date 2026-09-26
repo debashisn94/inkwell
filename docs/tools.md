@@ -90,6 +90,52 @@ single thing that made it read as a slideshow rather than a video.
 
 ---
 
+## Film tools
+
+The narrated-film pipeline. Full guide: [film.md](film.md).
+
+### `new-film.mjs` — scaffold a film
+
+```bash
+node tools/new-film.mjs <url> [--out=film]
+```
+
+Copies `film-template/`, runs research, and writes a starter `film.json` with a six-scene
+structure. Refuses to overwrite an existing `film.json`.
+
+### `film-voice.py` — narration
+
+```bash
+python tools/film-voice.py [--lines 3 8] [--takes 2] [--pick 5:1] [--skip-generate]
+```
+
+Run from the film directory, in the Python environment that has VoxCPM. Designs the
+narrator once (`voice/reference/narrator.wav`) if it is missing, generates takes per
+line, scores each (accuracy, identity, pace, range), masters the pick to −18 LUFS in
+`public/voice/`, and writes `voice.generated.json`. Scenes not named in `--lines` keep
+their previous pick.
+
+### `render-film.mjs` — render
+
+```bash
+node tools/render-film.mjs [--stems] [--stills 5,30]
+```
+
+Renders `out/Film.mp4` (1920×1080, 30 fps, mastered −16 LUFS). `--stems` adds
+`out/voice.wav` and `out/sfx.wav` at raw mix level. `--stills` renders single frames to
+`out/stills/`. Honours `CHROME_PATH`, `CONCURRENCY` and `PORT`, like `render-ad.mjs`.
+
+### `make-sfx.py` — the sound kit
+
+```bash
+python tools/make-sfx.py [out_dir]
+```
+
+Regenerates `film-template/public/sfx/` from noise and sine partials. Needs numpy, scipy
+and soundfile. Edit it to re-tune a sound; the kit is committed, so this is optional.
+
+---
+
 ## Character animation extras
 
 `bake-bvh.py`, `chunk.mjs`, `phonetics.mjs`, `tts-queue.sh`, `pace-fix.mjs`,

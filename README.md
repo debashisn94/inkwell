@@ -52,6 +52,28 @@ Ask your agent instead, and it will research the product, write the copy, and re
 make an ad for https://your-product.com
 ```
 
+## Also: narrated launch films
+
+For a launch video rather than an ad, the **film** format tells the story in 90 seconds to
+two minutes. It is 16:9 and voiced by one consistent narrator, with an expressive read
+per line and synthesized sound design timed to every animation beat.
+
+[![Holt Teams launch film](examples/holt-teams-film/poster.jpg)](examples/holt-teams-film/holt-teams-film.mp4)
+
+*[Watch the sample (1:51)](examples/holt-teams-film/holt-teams-film.mp4). Every frame and
+every sound in it comes from [`examples/holt-teams-film/film.json`](examples/holt-teams-film/film.json).*
+
+```bash
+node tools/new-film.mjs https://your-product.com --out=film
+# write film/film.json
+cd film && npm install
+python ../tools/film-voice.py            # narration (VoxCPM)
+node ../tools/render-film.mjs --stems    # out/Film.mp4 + voice & sfx stems for your music
+```
+
+Twelve scene types, from a live terminal to a lock slam and an architecture flow, are
+described in the [film guide](docs/film.md).
+
 ## How the research works
 
 `tools/research.mjs` reads the page and writes `brand.json`: name, positioning, headings,
@@ -92,6 +114,7 @@ format is one entry in `FORMATS` — the engine derives the rest.
 | | |
 |---|---|
 | [Getting started](docs/getting-started.md) | A complete run, start to finish |
+| [Narrated films](docs/film.md) | The launch-film format: scene types, narration, sound, rendering |
 | [`ad.json` reference](docs/ad-json.md) | Every field, and the writing rules that matter more |
 | [Tools](docs/tools.md) | Every command, flag and environment variable |
 | [Customising](docs/customising.md) | Palette, fonts, new aspect ratios, new scene types |
@@ -102,6 +125,7 @@ format is one entry in `FORMATS` — the engine derives the rest.
 
 - Node.js 20+ and [Remotion](https://remotion.dev) (free for individuals and teams of ≤3)
 - `ffmpeg` and `ffprobe` on `PATH`
+- For film narration only: Python with [VoxCPM](https://github.com/OpenBMB/VoxCPM); optionally Whisper and `transformers` for take scoring
 
 ## What's in this repo
 
@@ -109,6 +133,8 @@ format is one entry in `FORMATS` — the engine derives the rest.
 - `docs/` — full documentation
 - `tools/` — research, scaffold, render, QA
 - `template/` — the ad project copied into your working directory
+- `film-template/` — the narrated-film project, with its synthesized sound kit
+- `examples/holt-teams-film/` — a complete film and its rendered MP4
 - `examples/hello-inkwell/` — a runnable demo of the character-animation extra
 
 ## Also here: character animation

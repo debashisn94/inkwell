@@ -1,0 +1,334 @@
+{
+ "brandName": "Holt Teams",
+ "wordmark": "holt",
+ "tag": "teams",
+ "palette": {
+  "accent": "#E8A33D",
+  "accent2": "#4DD0E1",
+  "surface": "#0F0E0C",
+  "ink": "#F2EFE9",
+  "dark": true
+ },
+ "narrator": "A deep, resonant baritone male narrator in his late thirties with a low-pitched voice, the voice of a premium tech product launch film. Rich mid-low tone, crisp articulation, energetic but controlled, with genuine excitement and natural rises and falls",
+ "scenes": [
+  {
+   "type": "terminal",
+   "title": "~/payments-service",
+   "stamps": [
+    "MON 09:02",
+    "TUE 09:04"
+   ],
+   "command": "claude",
+   "status": "✻ New session · no memory of this repo",
+   "prompt": "Why do payment retries use the order id as the key?",
+   "reply": "I don't have any context on this codebase yet. Can you walk me through the service boundaries first?",
+   "headline": "Every morning, your AI agents\n*forget your company.*",
+   "voice": {
+    "text": "Every morning... your developers open Claude Code, or Cursor. And every single morning? The agent has forgotten your company.",
+    "emotion": "Intriguing storyteller opening, building quiet tension, then dropping low and slow on the final words"
+   }
+  },
+  {
+   "type": "chips",
+   "kicker": "Every session starts blank",
+   "headline": "So someone explains it all *again.*",
+   "chips": [
+    "Service boundaries",
+    "Naming rules",
+    "Why payment retries work this way",
+    "Which tests need Postgres locally",
+    "Who owns the auth service",
+    "What broke last quarter, and why"
+   ],
+   "chipTag": "again",
+   "lines": [
+    "The agent does good work. Then forgets all of it.",
+    "The new hire's agent knows even less than *the new hire.*"
+   ],
+   "voice": {
+    "text": "So someone explains it all... again. The service boundaries. The naming rules. The why. And then? It forgets. All of it.",
+    "emotion": "Wry and exasperated, a small sigh at the start, knowing and relatable, a touch of dry humour"
+   }
+  },
+  {
+   "type": "blocked",
+   "kicker": "The obvious fix",
+   "headline": "Put the memory in a vendor's cloud.\n*Security won't sign that.*",
+   "items": [
+    "Your architecture",
+    "Your customers",
+    "Your decisions"
+   ],
+   "destination": "Someone else's servers",
+   "label": "BLOCKED",
+   "quote": "Other than Copilot, everything is blocked. *Nothing opens there.*",
+   "attrib": "Director of Engineering · global manufacturer",
+   "stat": {
+    "value": "3 of 8",
+    "label": "engineering leaders in one room said the same thing."
+   },
+   "voice": {
+    "text": "The obvious fix? Put the memory in a vendor's cloud. But security won't sign that. Three out of eight engineering leaders, in one room, told me exactly this.",
+    "emotion": "Serious and matter-of-fact, firm emphasis, real weight on three out of eight"
+   }
+  },
+  {
+   "type": "reveal",
+   "lines": [
+    "One shared memory for every agent on your team.",
+    "*It never leaves your servers.*"
+   ],
+   "voice": {
+    "text": "This is Holt Teams! One shared memory, for every agent on your team. And it never, ever leaves your servers.",
+    "emotion": "The big reveal: excited, bright and proud, energy lifting, a confident smile in the voice"
+   }
+  },
+  {
+   "type": "flow",
+   "kicker": "How it works",
+   "headline": "Written once. *Recalled by every teammate's agent.*",
+   "boundary": "YOUR NETWORK · YOUR SERVERS",
+   "sources": [
+    {
+     "initial": "A",
+     "label": "Claude Code",
+     "tag": "HOOKS"
+    },
+    {
+     "initial": "R",
+     "label": "Cursor",
+     "tag": "MCP"
+    },
+    {
+     "initial": "S",
+     "label": "Codex",
+     "tag": "MCP"
+    },
+    {
+     "initial": "M",
+     "label": "Claude Code",
+     "tag": "HOOKS"
+    }
+   ],
+   "hub": "ONE TEAM MEMORY",
+   "outside": {
+    "label": "Vendor cloud",
+    "note": "Nothing is sent to us. *Ever.*"
+   },
+   "voice": {
+    "text": "Here's how it works. A decision gets written once... and every teammate's agent recalls it. Claude Code. Cursor. Codex. All inside your network. Nothing is sent to us. Ever.",
+    "emotion": "Clear, energetic explainer, brisk rhythm on the product names, firm and reassuring at the end"
+   }
+  },
+  {
+   "type": "record",
+   "kicker": "The fact model",
+   "headline": "Memory is atomic facts, *not documents.*",
+   "cardTitle": "RECALLED · f_01J8…",
+   "fields": [
+    [
+     "text",
+     "\"Payment retries use idempotency keys from the order id, never a random UUID.\""
+    ],
+    [
+     "type",
+     "\"convention\""
+    ],
+    [
+     "scope",
+     "\"team:payments\""
+    ],
+    [
+     "paths",
+     "[\"services/payments/**\"]"
+    ],
+    [
+     "evidence",
+     "3"
+    ],
+    [
+     "supersedes",
+     "\"f_01J6…\""
+    ]
+   ],
+   "callouts": [
+    {
+     "field": 2,
+     "title": "scope",
+     "body": "Only people cleared for *that path* ever get it recalled."
+    },
+    {
+     "field": 4,
+     "title": "evidence",
+     "body": "Seen *three separate times*, not guessed once."
+    },
+    {
+     "field": 5,
+     "title": "supersedes",
+     "body": "Old facts stay in history. They *never outrank* the new one."
+    }
+   ],
+   "voice": {
+    "text": "Memory is stored as small, single facts. Each one knows its scope, how often it's been seen... and exactly what it replaced.",
+    "emotion": "Thoughtful and precise, a craftsman proud of the design, gently intrigued"
+   }
+  },
+  {
+   "type": "metric",
+   "kicker": "The context compiler",
+   "headline": "The store grows without limit.\n*The prompt stays a fixed size.*",
+   "counter": {
+    "to": 150000,
+    "label": "Facts a year · 20-person team (est.)"
+   },
+   "bar": {
+    "label": "Memory in every prompt",
+    "segments": [
+     {
+      "value": "1.2K",
+      "label": "Pinned guardrails",
+      "share": 20
+     },
+     {
+      "value": "1.5K",
+      "label": "Session brief",
+      "share": 25
+     },
+     {
+      "value": "2.5K",
+      "label": "Recall for this prompt",
+      "share": 41.7
+     },
+     {
+      "value": "0.8K",
+      "label": "Headroom",
+      "share": 13.3
+     }
+    ]
+   },
+   "big": {
+    "value": "~6K",
+    "label": "tokens per prompt, however big the store gets."
+   },
+   "voice": {
+    "text": "Your store can grow to millions of facts. But what goes into each prompt? About six thousand tokens. Every single time.",
+    "emotion": "Impressed contrast: big and expansive on millions, then tight, precise and satisfied"
+   }
+  },
+  {
+   "type": "features",
+   "kicker": "Built for the security review",
+   "headline": "Your security team can *see it,*\nnot take our word for it.",
+   "cards": [
+    {
+     "icon": "graph",
+     "title": "One memory, every agent",
+     "body": "Claude Code today. Cursor and Codex through MCP."
+    },
+    {
+     "icon": "shield",
+     "title": "Inside your boundary",
+     "body": "Your machines or private cloud. Plain files you can open and delete."
+    },
+    {
+     "icon": "checklist",
+     "title": "Governed by default",
+     "body": "Trusted folders only. Per-path permissions and an audit log."
+    },
+    {
+     "icon": "plug",
+     "title": "Your model, your contract",
+     "body": "Claude, OpenAI or Gemini. No new data processor to approve."
+    }
+   ],
+   "log": {
+    "title": "AUDIT LOG · PREVIEW",
+    "rows": [
+     {
+      "text": "10:12:04  cursor@a.rao    read   f_01J8…  team:payments     ✓ allowed"
+     },
+     {
+      "text": "10:12:31  claude@s.iyer   write  f_01J9…  personal:s.iyer   ✓ allowed"
+     },
+     {
+      "text": "10:13:02  codex@m.khan    read   f_01J2…  org:finance       ✕ denied · out of scope",
+      "bad": true
+     }
+    ]
+   },
+   "voice": {
+    "text": "Agents only touch the folders you trust. Every read is logged. So your security team can see it for themselves... no need to take our word for it.",
+    "emotion": "Trustworthy and grounded, calm authority, a hint of a smile at the very end"
+   }
+  },
+  {
+   "type": "split",
+   "kicker": "Where it stands",
+   "headline": "What ships today. *What we build with you.*",
+   "left": {
+    "title": "Shipping now · open source, MIT",
+    "items": [
+     "Memory engine, knowledge graph, self-updating wiki",
+     "Automatic memory inside Claude Code",
+     "MCP server for Cursor and Codex",
+     "Trust-by-folder access control"
+    ]
+   },
+   "right": {
+    "title": "Building with founding teams",
+    "items": [
+     "Shared team memory, synced inside your network",
+     "Per-path permissions and an audit log",
+     "An admin view for people who never open a terminal",
+     "GitHub Copilot support, tested in your environment"
+    ]
+   },
+   "footnote": "github.com/holt-os/holt · v0.18 · 5,200+ downloads",
+   "voice": {
+    "text": "The memory engine? Open source, and shipping today. The team layer... we build with you.",
+    "emotion": "Honest and warm, inviting, excitement building on we build with you"
+   }
+  },
+  {
+   "type": "numbers",
+   "kicker": "The founding-partner offer",
+   "headline": "Three teams. *Twelve weeks.*",
+   "numbers": [
+    {
+     "value": "3",
+     "label": "founding teams shaping the product"
+    },
+    {
+     "value": "12",
+     "label": "weeks on real work, with a hands-on setup in week one"
+    },
+    {
+     "value": "30",
+     "label": "days with no licence fee"
+    }
+   ],
+   "price": {
+    "value": "₹999",
+    "label": "per seat per month, locked for 12 months."
+   },
+   "footnote": "Not earning its place? Keep every memory file and walk away.",
+   "voice": {
+    "text": "Three founding teams. Twelve weeks. And the first thirty days? No licence fee.",
+    "emotion": "Crisp, confident offer, punchy beats, rising excitement"
+   }
+  },
+  {
+   "type": "end",
+   "headline": "Become a *founding team.*",
+   "links": [
+    "productsdecoded.com/holt",
+    "github.com/holt-os/holt"
+   ],
+   "seconds": 10,
+   "voice": {
+    "text": "If your agents forget your company every morning... become a founding team. Holt Teams. Let's build it together.",
+    "emotion": "Inspiring close, sincere and energetic, then warm and confident on the final words"
+   }
+  }
+ ]
+}

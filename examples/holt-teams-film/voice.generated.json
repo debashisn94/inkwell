@@ -1,0 +1,115 @@
+{
+ "narrator": "voice/reference/narrator.wav",
+ "lines": [
+  {
+   "scene": 1,
+   "file": "voice/s01.wav",
+   "seconds": 7.84,
+   "take": 0,
+   "text": "Every morning... your developers open Claude Code, or Cursor. And every single morning? The agent has forgotten your company.",
+   "wps": 2.42,
+   "accuracy": 1.0,
+   "identity": 0.9755575060844421
+  },
+  {
+   "scene": 2,
+   "file": "voice/s02.wav",
+   "seconds": 9.76,
+   "take": 1,
+   "text": "So someone explains it all... again. The service boundaries. The naming rules. The why. And then? It forgets. All of it.",
+   "wps": 2.15,
+   "accuracy": 1.0,
+   "identity": 0.9729130268096924
+  },
+  {
+   "scene": 3,
+   "file": "voice/s03.wav",
+   "seconds": 9.44,
+   "take": 0,
+   "text": "The obvious fix? Put the memory in a vendor's cloud. But security won't sign that. Three out of eight engineering leaders, in one room, told me exactly this.",
+   "wps": 2.97,
+   "accuracy": 1.0,
+   "identity": 0.971135139465332
+  },
+  {
+   "scene": 4,
+   "file": "voice/s04.wav",
+   "seconds": 6.4,
+   "take": 0,
+   "text": "This is Holt Teams! One shared memory, for every agent on your team. And it never, ever leaves your servers.",
+   "wps": 3.12,
+   "accuracy": 1.0,
+   "identity": 0.9691528081893921
+  },
+  {
+   "scene": 5,
+   "file": "voice/s05.wav",
+   "seconds": 9.76,
+   "take": 0,
+   "text": "Here's how it works. A decision gets written once... and every teammate's agent recalls it. Claude Code. Cursor. Codex. All inside your network. Nothing is sent to us. Ever.",
+   "wps": 2.97,
+   "accuracy": 0.9310344827586207,
+   "identity": 0.9659064412117004
+  },
+  {
+   "scene": 6,
+   "file": "voice/s06.wav",
+   "seconds": 7.84,
+   "take": 0,
+   "text": "Memory is stored as small, single facts. Each one knows its scope, how often it's been seen... and exactly what it replaced.",
+   "wps": 2.81,
+   "accuracy": 1.0,
+   "identity": 0.9533341526985168
+  },
+  {
+   "scene": 7,
+   "file": "voice/s07.wav",
+   "seconds": 8.48,
+   "take": 1,
+   "text": "Your store can grow to millions of facts. But what goes into each prompt? About six thousand tokens. Every single time.",
+   "wps": 2.48,
+   "accuracy": 0.9047619047619048,
+   "identity": 0.9832298755645752
+  },
+  {
+   "scene": 8,
+   "file": "voice/s08.wav",
+   "seconds": 9.12,
+   "take": 1,
+   "text": "Agents only touch the folders you trust. Every read is logged. So your security team can see it for themselves... no need to take our word for it.",
+   "wps": 3.07,
+   "accuracy": 1.0,
+   "identity": 0.9886605739593506
+  },
+  {
+   "scene": 9,
+   "file": "voice/s09.wav",
+   "seconds": 5.92,
+   "take": 0,
+   "text": "The memory engine? Open source, and shipping today. The team layer... we build with you.",
+   "wps": 2.53,
+   "accuracy": 1.0,
+   "identity": 0.9748616814613342
+  },
+  {
+   "scene": 10,
+   "file": "voice/s10.wav",
+   "seconds": 4.96,
+   "take": 1,
+   "text": "Three founding teams. Twelve weeks. And the first thirty days? No licence fee.",
+   "wps": 2.62,
+   "accuracy": 1.0,
+   "identity": 0.9645522832870483
+  },
+  {
+   "scene": 11,
+   "file": "voice/s11.wav",
+   "seconds": 6.88,
+   "take": 0,
+   "text": "If your agents forget your company every morning... become a founding team. Holt Teams. Let's build it together.",
+   "wps": 2.62,
+   "accuracy": 1.0,
+   "identity": 0.9827753305435181
+  }
+ ]
+}

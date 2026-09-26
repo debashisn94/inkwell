@@ -15,3 +15,10 @@ memory-log.md
 template/node_modules/
 template/out/
 ad/
+film/
+**/audio/film-takes/
+**/voice/reference/*.wav
+**/.remotion/
+examples/*/out/
+examples/*/node_modules
+!**/voice.generated.json

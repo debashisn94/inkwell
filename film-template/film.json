@@ -1,0 +1,12 @@
+{
+  "_comment": "Placeholder. tools/new-film.mjs writes a starter for your product; see docs/film.md for every scene type.",
+  "brandName": "Your Product",
+  "wordmark": "product",
+  "narrator": "A confident, warm male narrator in his late thirties, the voice of a premium tech product launch film. Rich tone, crisp articulation, energetic but controlled, with genuine excitement.",
+  "scenes": [
+    { "type": "reveal", "lines": ["The one thing it does.", "*The reason to care.*"],
+      "voice": { "text": "This is Your Product. The one thing it does, and why it matters.", "emotion": "The big reveal: excited, bright and proud" } },
+    { "type": "end", "headline": "The *one* action.", "links": ["example.com"],
+      "voice": { "text": "Try it today.", "emotion": "Inspiring close, sincere and warm" } }
+  ]
+}

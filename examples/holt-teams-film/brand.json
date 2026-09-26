@@ -1,0 +1,17 @@
+{
+ "_comment": "Placeholder. tools/research.mjs overwrites this with the real product's brand.",
+ "name": "Holt Teams",
+ "url": "https://productsdecoded.com/holt",
+ "title": "Holt",
+ "description": "",
+ "headings": [],
+ "keywords": [],
+ "palette": {
+  "accent": "#E8A33D",
+  "accent2": "#4DD0E1",
+  "surface": "#0F0E0C",
+  "ink": "#F2EFE9",
+  "dark": true
+ },
+ "assets": []
+}

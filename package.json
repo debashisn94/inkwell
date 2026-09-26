@@ -1,14 +1,16 @@
 {
   "name": "inkwell",
-  "version": "0.2.0",
-  "description": "A product URL in, ad videos in every aspect ratio out. Built on Remotion.",
+  "version": "0.3.0",
+  "description": "A product URL in, ad videos in every aspect ratio out, plus narrated launch films. Built on Remotion.",
   "license": "MIT",
   "type": "module",
   "scripts": {
     "new": "node tools/new-ad.mjs",
     "research": "node tools/research.mjs",
     "render": "node tools/render-ad.mjs",
-    "qa": "node tools/qa.mjs"
+    "qa": "node tools/qa.mjs",
+    "new-film": "node tools/new-film.mjs",
+    "render-film": "node tools/render-film.mjs"
   },
   "peerDependencies": {
     "@remotion/bundler": ">=4.0.0",
@@ -20,6 +22,9 @@
     "advertising",
     "social-media",
     "aspect-ratio",
-    "product-video"
+    "product-video",
+    "launch-video",
+    "voiceover",
+    "text-to-speech"
   ]
 }
